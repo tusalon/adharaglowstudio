@@ -1,12 +1,12 @@
 // utils/config-negocio.js - VERSIÓN MULTI-TENANT CORREGIDA
-// CLIENTE: Exotic Nails by Yuly
+// CLIENTE: Adhara Glow Studio
 
 console.log('🏢 config-negocio.js cargado');
 
 // ============================================
 // 🔥 CONFIGURACIÓN POR CLIENTE - ¡LO ÚNICO QUE CAMBIA!
 // ============================================
-const NEGOCIO_ID_POR_DEFECTO = '55e7df41-6cf7-45d7-9fc3-a17966e3645a'; // ID de Exotic Nails by Yuly
+const NEGOCIO_ID_POR_DEFECTO = '062da19d-34b5-4866-90ad-84a61b064a6d'; // ID de Adhara Glow Studio
 
 // Hacer accesible globalmente
 window.NEGOCIO_ID_POR_DEFECTO = NEGOCIO_ID_POR_DEFECTO;
@@ -112,7 +112,7 @@ window.cargarConfiguracionNegocio = async function(forceRefresh = false) {
  */
 window.getNombreNegocio = async function() {
     const config = await window.cargarConfiguracionNegocio();
-    return config?.nombre || 'Exotic Nails by Yuly';
+    return config?.nombre || 'Adhara Glow Studio';
 };
 
 /**
@@ -120,7 +120,7 @@ window.getNombreNegocio = async function() {
  */
 window.getTelefonoDuenno = async function() {
     const config = await window.cargarConfiguracionNegocio();
-    return config?.telefono || '52541431';
+    return config?.telefono || '56736345';
 };
 
 /**
@@ -128,7 +128,7 @@ window.getTelefonoDuenno = async function() {
  */
 window.getEmailNegocio = async function() {
     const config = await window.cargarConfiguracionNegocio();
-    return config?.email || 'yulynails52@gmail.com';
+    return config?.email || 'plucy2128@gmail.com';
 };
 
 /**
@@ -160,7 +160,7 @@ window.getHorarioAtencion = async function() {
  */
 window.getMensajeBienvenida = async function() {
     const config = await window.cargarConfiguracionNegocio();
-    return config?.mensaje_bienvenida || '¡Bienvenida a Exotic Nails by Yuly!';
+    return config?.mensaje_bienvenida || '¡Bienvenida a Adhara Glow Studio!';
 };
 
 /**
@@ -176,7 +176,7 @@ window.getMensajeConfirmacion = async function() {
  */
 window.getNtfyTopic = async function() {
     const config = await window.cargarConfiguracionNegocio();
-    return config?.ntfy_topic || 'exoticnailsbyyuly';
+    return config?.ntfy_topic || 'adharaglowstudio';
 };
 
 /**
@@ -201,5 +201,5 @@ setTimeout(async () => {
     await window.cargarConfiguracionNegocio();
 }, 500);
 
-console.log('✅ config-negocio.js listo para Exotic Nails by Yuly');
+console.log('✅ config-negocio.js listo para Adhara Glow Studio');
 console.log('🏷️  ID configurado:', NEGOCIO_ID_POR_DEFECTO);
