@@ -1,6 +1,6 @@
 // sw.js - Service Worker para Adhara Glow Studio
 
-const CACHE_NAME = 'adharaglowstudio-v1';
+const CACHE_NAME = 'adharaglowstudio-v49';
 const urlsToCache = [
   '/adharaglowstudio/',
   '/adharaglowstudio/index.html',
@@ -17,7 +17,16 @@ const urlsToCache = [
   '/adharaglowstudio/icons/icon-152x152.png',
   '/adharaglowstudio/icons/icon-192x192.png',
   '/adharaglowstudio/icons/icon-384x384.png',
-  '/adharaglowstudio/icons/icon-512x512.png'
+  '/adharaglowstudio/icons/icon-512x512.png',
+  '/adharaglowstudio/vendor/react.production.min.js',
+  '/adharaglowstudio/vendor/react-dom.production.min.js',
+  '/adharaglowstudio/vendor/babel.min.js',
+  '/adharaglowstudio/vendor/bcrypt.min.js',
+  '/adharaglowstudio/vendor/tailwind-browser.js',
+  '/adharaglowstudio/vendor/lucide/lucide.css',
+  '/adharaglowstudio/vendor/lucide/lucide.woff2',
+  '/adharaglowstudio/utils/push-config.js',
+  '/adharaglowstudio/utils/push-notifications.js'
 ];
 
 // ============================================
@@ -137,6 +146,51 @@ self.addEventListener('message', event => {
       });
     });
   }
+});
+
+// ============================================
+// WEB PUSH OPCIONAL
+// ============================================
+self.addEventListener('push', event => {
+  let payload = {};
+
+  try {
+    payload = event.data ? event.data.json() : {};
+  } catch (error) {
+    payload = {
+      title: 'RservasRoma',
+      body: event.data ? event.data.text() : 'Tienes una nueva notificación'
+    };
+  }
+
+  const title = payload.title || 'RservasRoma';
+  const options = {
+    body: payload.body || 'Tienes una nueva notificación',
+    icon: '/adharaglowstudio/icons/icon-192x192.png',
+    badge: '/adharaglowstudio/icons/icon-96x96.png',
+    tag: payload.tag || 'rservasroma',
+    data: {
+      url: payload.url || '/adharaglowstudio/admin.html',
+      ...(payload.data || {})
+    }
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+
+  const targetUrl = event.notification?.data?.url || '/adharaglowstudio/admin.html';
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if (client.url.includes(targetUrl) && 'focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(targetUrl);
+      return null;
+    })
+  );
 });
 
 console.log('✅ Service Worker configurado para Adhara Glow Studio');
